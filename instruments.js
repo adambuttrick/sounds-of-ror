@@ -6,16 +6,16 @@ class InstrumentManager {
         
         this.availableInstruments = {
             'piano': {
-                baseUrl: '/samples/piano/'
+                baseUrl: './samples/piano/'
             },
             'guitar': {
-                baseUrl: '/samples/guitar/'
+                baseUrl: './samples/guitar/'
             },
             'violin': {
-                baseUrl: '/samples/violin/'
+                baseUrl: './samples/violin/'
             },
             'xylophone': {
-                baseUrl: '/samples/xylophone/'
+                baseUrl: './samples/xylophone/'
             }
         };
     }
