@@ -1,6 +1,6 @@
-# Sounds of ROR - Musical Organization Identifier
+# Sounds of ROR
 
-Sounds of ROR is a highly unserious art project/musical typeahead that allows you to search for an organization by name and use its ROR ID to generate a unique melody. You can check it out at [https://adambuttrick.github.io/sounds-of-ror/](https://adambuttrick.github.io/sounds-of-ror/)! 
+Sounds of ROR is a highly unserious art project/musical typeahead that allows you to search for an organization by name and use its ROR ID to generate a unique melody. You can check it out at [https://adambuttrick.github.io/sounds-of-ror/](https://adambuttrick.github.io/sounds-of-ror)! 
 
 ## Dependencies
 

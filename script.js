@@ -67,7 +67,7 @@ function stopNoteAnimation() {
   });
 }
 
-function extractMusicalDNA(rorId) {
+function extractTemplateFromRORID(rorId) {
   if (!rorId || rorId.length < 9) {
     throw new Error('Invalid ROR ID format');
   }
@@ -201,7 +201,7 @@ function generateMelody(seed, scale) {
   if (!seed) return [];
   
   const notes = scales[scale];
-  const dna = extractMusicalDNA(seed);
+  const template = extractTemplateFromRORID(seed);
   const safeNote = (index) => {
     const safeIndex = ((index % notes.length) + notes.length) % notes.length;
     return notes[safeIndex] || notes[0];
@@ -212,42 +212,42 @@ function generateMelody(seed, scale) {
   let currentTime = 0;
 
   while (currentTime < COMPOSITION_MEASURES) {
-    const usePreferred = seededRandom() < dna.intervals.probability;
-    const intervalPool = usePreferred ? dna.intervals.preferred : dna.intervals.patterns;
+    const usePreferred = seededRandom() < template.intervals.probability;
+    const intervalPool = usePreferred ? template.intervals.preferred : template.intervals.patterns;
     const intervalIndex = Math.floor(seededRandom() * intervalPool.length);
     const interval = intervalPool[intervalIndex];
     const noteIndex = melody.length === 0 ? 0 : 
       ((melody[melody.length - 1].note.match(/\d+/) || ['4'])[0] - interval);
     
-    const duration = seededRandom() < dna.development.rhythmicVariety ? '8n' : '4n';
-    const velocityVariation = (seededRandom() - 0.5) * dna.development.velocity.variation;
+    const duration = seededRandom() < template.development.rhythmicVariety ? '8n' : '4n';
+    const velocityVariation = (seededRandom() - 0.5) * template.development.velocity.variation;
     
     melody.push({
       note: safeNote(noteIndex),
       duration,
       time: currentTime,
-      velocity: Math.min(1, Math.max(0.1, dna.development.velocity.base + velocityVariation))
+      velocity: Math.min(1, Math.max(0.1, template.development.velocity.base + velocityVariation))
     });
 
-    if (seededRandom() < dna.development.harmonyDensity) {
-      const harmonyOffset = dna.personality.complexity % 3 + 2;
+    if (seededRandom() < template.development.harmonyDensity) {
+      const harmonyOffset = template.personality.complexity % 3 + 2;
       melody.push({
         note: safeNote(noteIndex + harmonyOffset),
         duration,
         time: currentTime,
-        velocity: Math.min(1, Math.max(0.1, (dna.development.velocity.base * 0.8) + velocityVariation))
+        velocity: Math.min(1, Math.max(0.1, (template.development.velocity.base * 0.8) + velocityVariation))
       });
     }
 
     currentTime += getDurationValue(duration);
   }
 
-  addCadence(melody, notes, dna, currentTime, seededRandom);
+  addConclusion(melody, notes, template, currentTime, seededRandom);
   return melody.filter(event => event.note !== undefined);
 }
 
-function addCadence(melody, notes, dna, currentTime, seededRandom) {
-  const { personality, development } = dna;
+function addConclusion(melody, notes, template, currentTime, seededRandom) {
+  const { personality, development } = template;
   const direction = personality.direction;
   const scale = $('#scaleSelect').val();
   const numVoices = development.harmonyDensity > 0.7 ? 3 : 2;
@@ -275,7 +275,7 @@ function addCadence(melody, notes, dna, currentTime, seededRandom) {
       finalProgression = direction > 0 ? [4, 2, 0] : [4, 3, 0];
   }
 
-  const approachNote = (dna.intervals[0] % 7 + 7) % 7;
+  const approachNote = (template.intervals[0] % 7 + 7) % 7;
   const preResolution = [approachNote, ...finalProgression];
   
   preResolution.forEach((noteIdx, i) => {
