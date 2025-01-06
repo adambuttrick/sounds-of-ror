@@ -3,19 +3,21 @@ class InstrumentManager {
         this.currentInstrument = null;
         this.loadedInstruments = {};
         this.isLoading = false;
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const basePath = isGitHubPages ? '/sounds-of-ror' : '';
         
         this.availableInstruments = {
             'piano': {
-                baseUrl: './samples/piano/'
+                baseUrl: `${basePath}/samples/piano/`
             },
             'guitar': {
-                baseUrl: './samples/guitar/'
+                baseUrl: `${basePath}/samples/guitar/`
             },
             'violin': {
-                baseUrl: './samples/violin/'
+                baseUrl: `${basePath}/samples/violin/`
             },
             'xylophone': {
-                baseUrl: './samples/xylophone/'
+                baseUrl: `${basePath}/samples/xylophone/`
             }
         };
     }
