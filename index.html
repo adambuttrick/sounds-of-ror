@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>String to Music</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/abcjs/6.4.4/abcjs-basic-min.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="score-section" role="region" aria-label="Musical Score Display">
+      <div id="scoreLabel" class="score-label" aria-live="polite"></div>
+      <div id="melodyText" class="melody-text" aria-live="polite"></div>
+      <div id="score" class="score-container" role="img" aria-label="Musical notation"></div>
+      <div id="rorId" class="ror-id" aria-live="polite"></div>
+    </div>
+    <div class="header" role="banner">
+<div class="ascii-art" id="title" role="heading" aria-level="1" aria-label="Sound of ROR">
+  .oooooo..o   .oooooo.   ooooo     ooo ooooo      ooo oooooooooo.    .oooooo..o        .oooooo.   oooooooooooo      ooooooooo.     .oooooo.   ooooooooo.   
+  d8P'    `Y8  d8P'  `Y8b  `888'     `8' `888b.     `8' `888'   `Y8b  d8P'    `Y8       d8P'  `Y8b  `888'     `8      `888   `Y88.  d8P'  `Y8b  `888   `Y88. 
+  Y88bo.      888      888  888       8   8 `88b.    8   888      888 Y88bo.           888      888  888               888   .d88' 888      888  888   .d88' 
+   `"Y8888o.  888      888  888       8   8   `88b.  8   888      888  `"Y8888o.       888      888  888oooo8          888ooo88P'  888      888  888ooo88P'  
+       `"Y88b 888      888  888       8   8     `88b.8   888      888      `"Y88b      888      888  888    "          888`88b.    888      888  888`88b.    
+  oo     .d8P `88b    d88'  `88.    .8'   8       `888   888     d88' oo     .d8P      `88b    d88'  888               888  `88b.  `88b    d88'  888  `88b.  
+  8""88888P'   `Y8bood8P'     `YbodP'    o8o        `8  o888bood8P'   8""88888P'        `Y8bood8P'  o888o             o888o  o888o  `Y8bood8P'  o888o  o888o 
+</div>
+      <div class="ascii-container" role="presentation">
+        <div class="ascii-art" id="birds" aria-label="birds">
+               _      _
+            \ ('<    >')
+           _\_v_)____(  \
+          (___________)\\
+             (     )     \
+              |   |
+              |   |
+              |   |
+             _|   |_
+\ | . \ \ / (_______)lc ..\ | / ,,</div>
+        <div class="ascii-art" aria-label="lion" id="lion">
+      @|\@@@@ 
+        -  @@@@
+      /7   @@@@
+      /    @@@@@@
+      \-' @@@@@@@@`-_____________
+      -@@@@@@@@@             /    \
+  _______/    /       ______/      |_________/ /
+/,__________/  `-.__ /,_____________---------, _<</div>
+      </div>
+    </div>
+    
+    <div class="search-container" role="search">
+      <input type="text" 
+             id="organizationSearch" 
+             class="typeahead" 
+             placeholder="Search for an organization..." 
+             autocomplete="off"
+             aria-label="Search for an organization"
+             role="combobox"
+             aria-expanded="false"
+             aria-controls="organization-suggestions"
+             aria-autocomplete="list">
+      <button id="clearDataBtn" 
+              aria-label="Clear search data">
+        X
+      </button>
+    </div>
+    
+    <div class="select-container-row">
+      <div class="select-wrapper">
+        <label for="scaleSelect" class="visually-hidden">Select musical scale</label>
+        <select id="scaleSelect" aria-label="Musical scale selection">
+          <option value="major">Major</option>
+          <option value="naturalMinor">Natural Minor</option>
+          <option value="harmonicMinor">Harmonic Minor</option>
+          <option value="melodicMinor">Melodic Minor</option>
+          <option value="majorPentatonic">Major Pentatonic</option>
+          <option value="minorPentatonic">Minor Pentatonic</option>
+          <option value="blues">Blues</option>
+        </select>
+      </div>
+      <div class="select-wrapper">
+        <label for="instrumentSelect" class="visually-hidden">Select instrument</label>
+        <select id="instrumentSelect" aria-label="Instrument selection">
+          <option value="piano">Piano</option>
+          <option value="guitar">Guitar</option>
+          <option value="violin">Violin</option>
+          <option value="xylophone">Xylophone</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="button-container" role="group" aria-label="Playback controls">
+      <button id="playBtn" class="control-btn" aria-label="Play melody">
+        > Play
+      </button>
+      <button id="pauseBtn" class="control-btn" aria-label="Pause melody">
+        || Pause
+      </button>
+      <button id="stopBtn" class="control-btn" aria-label="Stop melody">
+        # Stop
+      </button>
+      <button id="rewindBtn" class="control-btn" aria-label="Rewind melody">
+        << Rewind
+      </button>
+    </div>
+    
+    <div id="announcement-area" class="announcement-area" aria-live="polite" role="status"></div>
+  </div>
+</body>
+</html>
